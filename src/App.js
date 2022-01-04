@@ -7,7 +7,7 @@ function App() {
   return (
     <Router basename="/linkedin">
       <Routes>
-        <Route exact path="/" element={<Login />} />
+        <Route exact path="/" element=<Login />/>
       </Routes>
     </Router>
   );
