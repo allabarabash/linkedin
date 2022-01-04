@@ -13,6 +13,14 @@ const Login = (props) => {
                 </div>
 
             </Nav>
+            <Section>
+                <Hero>
+                    <h1>Welcome to your professional community</h1>
+                    <img src="/images/login-hero.svg" alt=""/>
+                    
+                </Hero>
+            </Section>
+
         </Container>
     )
 }
@@ -76,5 +84,64 @@ const SignIn = styled.a`
         text-decoration: none;
     }
 `
+
+const Section = styled.section`
+    align-content: start;
+    display: flex;
+    min-height: 700px;
+    padding-bottom: 138px;
+    padding-top: 40px;
+    padding: 60px 0;
+    position: relative;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1128px;
+    align-items: center;
+    margin: auto;
+    
+    @media (max-width: 768px) {
+        margin: auto;
+        min-height: 0px;      
+    }
+`;
+
+const Hero = styled.div`
+    width: 100%;
+    h1 {
+        padding-bottom: 0;
+        width: 55%;
+        font-size: 56px;
+        color: #2977c9;
+        font-weight: 200;
+        line-height: 70px;
+        @media (max-width: 768px) {
+            text-align: center;
+            font-size: 20px;
+            width: 100%;
+            line-height: 2;
+        }
+        
+    }
+    
+    img {
+        /*z-index: -1;*/
+        width: 700px;
+        height: 670px;
+        position: absolute;
+        bottom: -2px;
+        right: -150px;
+        
+        @media (max-width: 768px) {
+            top: 230px;
+            width: initial;
+            position: initial;
+            height: initial;
+          
+          
+        }
+        
+    }
+`;
+
 
 export default Login;
