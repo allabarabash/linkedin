@@ -5,7 +5,7 @@ import React from "react";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/linkedin">
       <Routes>
         <Route exact path="/" element={<Login />} />
       </Routes>
