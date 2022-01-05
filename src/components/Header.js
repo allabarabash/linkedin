@@ -20,10 +20,50 @@ const Header = (props) => {
                         <img src="/images/search-icon.svg" alt=""/>
                     </SearchIcon>
                 </Search>
+
+                <Nav>
+                    <NavListWrap>
+                        <NavListItem className="active">
+                            <a>
+                                <img src="/images/nav-home.svg" alt=""/>
+                                <span>Home</span>
+                            </a>
+                        </NavListItem>
+
+                        <NavListItem>
+                            <a>
+                                <img src="/images/nav-network.svg" alt=""/>
+                                <span>Network</span>
+                            </a>
+                        </NavListItem>
+
+                        <NavListItem>
+                            <a>
+                                <img src="/images/nav-work.svg" alt=""/>
+                                <span>Jobs</span>
+                            </a>
+                        </NavListItem>
+
+                        <NavListItem>
+                            <a>
+                                <img src="/images/nav-messaging.svg" alt=""/>
+                                <span>Messages</span>
+                            </a>
+                        </NavListItem>
+
+                        <NavListItem>
+                            <a>
+                                <img src="/images/nav-notifications.svg" alt=""/>
+                                <span>Notifications</span>
+                            </a>
+                        </NavListItem>
+                    </NavListWrap>
+                </Nav>
             </Content>
         </Container>
     )
 }
+
 
 const Container = styled.div`
     background-color: white;
@@ -89,6 +129,79 @@ const SearchIcon = styled.div`
     align-items: center;
     
 `;
+
+const Nav = styled.nav`
+    margin-left: auto;
+    display: block;
+    
+    @media (max-width: 768px) {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            background: white;
+            width: 100%;
+            
+    }
+`;
+
+const NavListWrap = styled.ul`
+    display: flex;
+    flex-wrap: no-wrap;
+    list-style-type: none;
+    
+    .active
+        span:after {
+            content: '';
+            transform: scaleX(1);
+            border-bottom: 2px solid var(--white, #fff);
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            transition: transform .2s ease-in-out;
+            width: 100%;
+            border-color: rgba(0, 0, 0, 0.9);
+        }
+        
+    }
+      
+`;
+const NavListItem = styled.li`
+    display: flex;
+    align-items: center;
+    a {
+        align-items: center;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        font-size: 12px;
+        font-weight: 400;
+        justify-content: center;
+        line-height: 1.5;
+        min-height: 42px;
+        min-width: 80px;
+        position: relative;
+        text-decoration: none;
+        span {
+            color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            
+        }
+        
+        @media (max-width: 768px) {
+            min-width: 70px;
+    }
+    }
+    
+    &:hover, &:active {
+        a {
+            span {
+                color: rgba(0, 0, 0, 0.9);
+            }
+        }
+    }
+`;
+
 
 
 export default Header;
