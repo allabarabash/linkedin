@@ -8,7 +8,7 @@ const Rightside = (props) => {
                     <h2>Add to your feed</h2>
                     <img src="images/feed-icon.svg" alt=""/>
                 </Title>
-                
+
                 <Feedlist>
                     <li>
                         <a>
@@ -29,13 +29,22 @@ const Rightside = (props) => {
                         </div>
                     </li>
                 </Feedlist>
+
+                <Recommendation>
+                    View all recommendations
+                    <img src="images/right-icon.svg" alt=""/>
+                </Recommendation>
             </FollowCard>
+
+            <BannerCard>
+                <img src="https://static-exp1.licdn.com/scds/common/u/images/promo/ads/li_evergreen_jobs_ad_300x250_v1.jpg" alt=""/>
+            </BannerCard>
         </Container>
     )
 };
 
 const Container = styled.div`
-    grid-area: Rightside;
+    grid-area: rightside;
 `;
 
 const FollowCard = styled.div`
@@ -96,9 +105,31 @@ const Feedlist = styled.ul`
     
 `;
 
-const Avatar = styled.div``;
+const Avatar = styled.div`
+    background-image: url('https://static-exp1.licdn.com/sc/h/1b4vl1r54ijmrmcyxzoidwmxs');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+    margin-right: 8px;
+`;
 
+const Recommendation = styled.a`
+    color: #0a66c2;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    
+`;
 
+const BannerCard = styled(FollowCard)`
+    img {
+        width: 100%;
+        height: 100%;
+        
+    }
+`;
 
 
 export default Rightside;
