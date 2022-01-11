@@ -3,23 +3,27 @@ import React from "react";
 import Main from "./Main";
 import Leftside from "./Leftside";
 import Rightside from "./Rightside";
+import {Navigate} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 const Home = (props) => {
     return (
         <Container>
-                <Section>
-                    <h5>
-                        <a>Hiring in a hurry? - </a>
-                    </h5>
 
-                    <p>Find talented pros in etwas hää</p>
-                </Section>
+            {!props.user && <Navigate to='/'/>}
+            <Section>
+                <h5>
+                    <a>Hiring in a hurry? - </a>
+                </h5>
 
-                <Layout>
-                    <Leftside />
-                    <Main />
-                    <Rightside />
-                </Layout>
+                <p>Find talented pros here</p>
+            </Section>
+
+            <Layout>
+                <Leftside props={props}/>
+                <Main/>
+                <Rightside/>
+            </Layout>
         </Container>
     )
 }
@@ -83,4 +87,10 @@ const Layout = styled.div`
     
     `;
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        user: state.userState.user,
+    }
+}
+
+export default connect(mapStateToProps)(Home);

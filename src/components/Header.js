@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import React from "react";
+import {connect} from "react-redux";
+import { signOutAPI } from '../actions';
 
 const Header = (props) => {
     return (
@@ -60,12 +62,18 @@ const Header = (props) => {
 
                         <User>
                             <a>
-                                <img src="images/user.svg" alt=""/>
-                                <span>Me</span>
-                                <img src="images/down-icon.svg" alt=""/>
+                                {props.user && props.user.photoURL ?  (
+                                    <img src={props.user.photoURL} alt=""/>
+                                    ) : (
+                                    <img src="images/user.svg" alt=""/>
+                                )}
+                                <span>
+                                    Me
+                                    <img src="images/down-icon.svg" alt=""/>
+                                </span>
                             </a>
 
-                            <SignOut>
+                            <SignOut onClick={() => props.signOut()}>
                                 <a>Sign out</a>
                             </SignOut>
                         </User>
@@ -118,7 +126,6 @@ const Search = styled.div`
     & > div {
         max-width: 280px;
         input {
-            border: none;
             box-shadow: none;
             background-color: #eef3f8;
             border-radius: 2px;
@@ -129,8 +136,8 @@ const Search = styled.div`
             font-weight: 400;
             font-size: 14px;
             height: 34px;
-            border-color: #dce6f1;
-            vertical-align: text-top:
+            border: none #dce6f1;
+            vertical-align: text-top;
   
         }
     }
@@ -166,7 +173,7 @@ const Nav = styled.nav`
 
 const NavListWrap = styled.ul`
     display: flex;
-    flex-wrap: no-wrap;
+    flex-wrap: nowrap;
     list-style-type: none;
     
     .active
@@ -268,5 +275,13 @@ const Work = styled(User)`
     border-left: 1px solid rgba(0, 0, 0, 0.08);
 `;
 
+const mapStateToProps = (state) => {
+    return {
+        user: state.userState.user
+    }
+}
+const mapDispatchToProps = (dispatch) => ({
+    signOut: () => dispatch(signOutAPI()),
+})
 
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -1,13 +1,18 @@
 import styled from 'styled-components';
 import React from "react";
+import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+
+import { signInAPI } from '../actions';
 
 const Login = (props) => {
     console.log(React.version);
     return (
         <Container>
+            { props.user && <Navigate to="/home"/> }
             <Nav>
                 <a href="/">
-                    <img src="/images/login-logo.svg" alt=""/>
+                    <img src="images/login-logo.svg" alt=""/>
                 </a>
                 <div>
                     <Join>Join now</Join>
@@ -18,13 +23,13 @@ const Login = (props) => {
             <Section>
                 <Hero>
                     <h1>Welcome to your professional community</h1>
-                    <img src="/images/login-hero.svg" alt=""/>
+                    <img src="images/login-hero.svg" alt=""/>
                     
                 </Hero>
 
                 <Form>
-                    <Google>
-                        <img src="/images/google.svg" alt=""/>
+                    <Google onClick={() => props.signIn()}>
+                        <img src="images/google.svg" alt=""/>
                         Sign in with Google
                     </Google>
                 </Form>
@@ -35,7 +40,7 @@ const Login = (props) => {
 }
 
 const Container = styled.div`
-    padding: 0px;
+    padding: 0;
 `;
 
 const Nav = styled.nav`
@@ -46,7 +51,7 @@ const Nav = styled.nav`
     align-items: center;
     position: relative;
     justify-content: space-between;
-    flex-wrap: no-wrap;
+    flex-wrap: nowrap;
     
     & > a {
         width: 135px;
@@ -67,7 +72,7 @@ const Join = styled.a`
     color: rgba(0, 0, 0, 0.6);
     margin-right: 12px;
     
-    &: hover {
+    &:hover {
         background-color: rgba(0, 0, 0, 0.08);
         color: rgba(0, 0, 0, 0.9);
         text-decoration: none;
@@ -85,11 +90,11 @@ const SignIn = styled.a`
     line-height: 40px;
     padding: 10px 24px;
     text-align: center;
-    background-color: rgba (0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
     
     &:hover {
         background-color: rgba(112, 181, 249, 0.15);
-        color: 0a66c2;
+        color: #0a66c2;
         text-decoration: none;
     }
 `
@@ -98,8 +103,6 @@ const Section = styled.section`
     align-content: start;
     display: flex;
     min-height: 700px;
-    padding-bottom: 138px;
-    padding-top: 40px;
     padding: 60px 0;
     position: relative;
     flex-wrap: wrap;
@@ -110,7 +113,7 @@ const Section = styled.section`
     
     @media (max-width: 768px) {
         margin: auto;
-        min-height: 0px;      
+        min-height: 0;      
     }
 `;
 
@@ -178,7 +181,7 @@ const Google = styled.button`
    z-index: 0;
    transition-duration: 167ms;
    font-size: 20px;
-   color: rgba (0, 0, 0, 0.6);
+   color: rgba(0, 0, 0, 0.6);
    
    &:hover {
     background-color: rgba(207, 207, 207, 0.25);
@@ -186,5 +189,16 @@ const Google = styled.button`
    }
 `;
 
+const mapStateToProps = (state) => {
+    return {
+        user: state.userState.user
+    };
+}
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+    signIn: () => dispatch(signInAPI())
+})
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
