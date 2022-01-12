@@ -5,50 +5,71 @@ import closeIcon from '../assets/images/close-icon.svg';
 import userPhoto from '../assets/images/user.svg';
 import sharePhoto from '../assets/images/share-photo.svg';
 import shareVideo from '../assets/images/share-video.svg';
-import shareDocument from '../assets/images/share-document.svg';
 import shareComment from '../assets/images/share-comment.svg';
 
 const PostModal = (props) => {
-
+    const [editorText, setEditorText] = useState("");
+    const reset = (e) => {
+        setEditorText ("");
+        props.handleClick(e);
+    }
     return (
-        <Container>
-            <Content>
-                <Header>
-                    <h2>Create a post</h2>
-                    <button>
-                        <img src={closeIcon} alt=""/>
-                    </button>
-                </Header>
-                <SharedContent>
-                    <UserInfo>
-                        <img src={userPhoto} alt=""/>
-                        <span>Name</span>
-                    </UserInfo>
-                </SharedContent>
-                <SharedCreation>
-                    <AttachAssets>
-                        <AssetButton>
-                            <img src={sharePhoto} alt=""/>
-                        </AssetButton>
-                        <AssetButton>
-                            <img src={shareVideo} alt=""/>
-                        </AssetButton>
-                    </AttachAssets>
+        <>
+            { props.showModal === 'open' &&
 
-                    <ShareComment>
-                        <AssetButton>
-                            <img src={shareComment} alt=""/>
-                            Alle
-                        </AssetButton>
-                    </ShareComment>
+                <Container>
+                    <Content>
+                        <Header>
+                            <h2>Create a post</h2>
+                            <button onClick={(event) => reset(event)}>
+                                <img src={closeIcon} alt=""/>
+                            </button>
+                        </Header>
+                        <SharedContent>
+                            <UserInfo>
+                                <img src={userPhoto} alt=""/>
+                                <span>Name</span>
+                            </UserInfo>
+                            <Editor>
+                        <textarea
+                            value={editorText}
+                            onChange={(e) => {
+                               /* console.log(e.target.value);*/
+                                setEditorText(e.target.value)
+                            }}
+                            placeholder="Say something"
+                            autoFocus={true}
+                        >
 
-                    <PostButton>
-                        Post
-                    </PostButton>
+                        </textarea>
+                            </Editor>
+                        </SharedContent>
+                        <SharedCreation>
+                            <AttachAssets>
+                                <AssetButton>
+                                    <img src={sharePhoto} alt=""/>
+                                </AssetButton>
+                                <AssetButton>
+                                    <img src={shareVideo} alt=""/>
+                                </AssetButton>
+                            </AttachAssets>
 
-                </SharedCreation>
-            </Content>
-        </Container>
+                            <ShareComment>
+                                <AssetButton>
+                                    <img src={shareComment} alt=""/>
+                                    Alle
+                                </AssetButton>
+                            </ShareComment>
+
+                            <PostButton>
+                                Post
+                            </PostButton>
+
+                        </SharedCreation>
+                    </Content>
+                </Container>
+            }
+            </>
     )
 }
 
@@ -102,7 +123,8 @@ const Header = styled.div`
       background: none;
       border: none;
       
-      img {
+      img, svg {
+        pointer-events: none;
       }
 
   }
@@ -183,6 +205,23 @@ const PostButton = styled.button`
   
   &:hover {
     background: #004182;
+  }
+`;
+
+const Editor = styled.div`
+  padding: 12px 24px;
+  textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: none;
+    
+  }
+  input {
+    width: 100%;
+    height: 35px;
+    font-size: 16px;
+    margin-bottom: 20px;
+  
   }
 `;
 
