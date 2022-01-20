@@ -12,7 +12,7 @@ function App(props) {
         props.getUserAuth();
     }, []);
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/linkedin">
       <Routes>
           <Route exact path="/" element={<Login/>}/>
           <Route path='/home' element={[<Header/>,<Home/>]}/>
