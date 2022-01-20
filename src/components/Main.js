@@ -1,12 +1,27 @@
 import styled from 'styled-components';
 import React from "react";
 import PostModal from "./PostModal";
-import { useState } from "react";
-import store from "../store";
+import {useState, useEffect} from "react";
+import {getPostsAPI} from "../actions";
+import {connect} from 'react-redux';
+import userPhoto from "../assets/images/user.svg";
+import ellipsis from "../assets/images/ellipsis.svg";
+import contentPhoto from "../assets/images/konyaalti.jpg";
+import likeIcon from "../assets/images/like-icon.svg";
+import commentIcon from "../assets/images/comment-icon.svg";
+import shareIcon from "../assets/images/share-icon.svg";
+import sendIcon from "../assets/images/send-icon.svg";
+import spinLoader from "../assets/images/spin-loader.svg";
+import ReactPlayer from "react-player";
 
 const Main = (props) => {
     //by default is the modal closed
-    const [showModal, setShowModal ] = useState("close");
+    const [showModal, setShowModal] = useState("close");
+
+    useEffect(() => {
+        props.getPosts()
+    }, []);
+
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -26,118 +41,162 @@ const Main = (props) => {
                 break;
         }
 
-        console.log(store.getState());
+        /*console.log(store.getState());*/
 
 
     }
+    console.log(props.posts.map((post, key) => {
+        console.log("Image: ", post.actor.image);
+    }));
     return (
-        <Container>
-            <ShareBox>
-                <div>
-                    <img src="images/user.svg" alt=""/>
-                    <button onClick={handleClick}>Start a post</button>
-                </div>
 
-                <div>
-                    <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
-                             fill="currentColor" className="mercado-match" width="24" height="24" focusable="false">
-                            <path
-                                d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1zm-2-7a2 2 0 11-2-2 2 2 0 012 2z"></path>
-                        </svg>
-                        <span>Photo</span>
-                    </button>
+        <>
 
-                    <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
-                             fill="currentColor" className="mercado-match" width="24" height="24" focusable="false">
-                            <path
-                                d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-9 12V8l6 4z"></path>
-                        </svg>
-                        <span>Video</span>
-                    </button>
-
-                    <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
-                             fill="currentColor" className="mercado-match" width="24" height="24" focusable="false">
-                            <path
-                                d="M3 3v15a3 3 0 003 3h12a3 3 0 003-3V3zm13 1.75A1.25 1.25 0 1114.75 6 1.25 1.25 0 0116 4.75zm-8 0A1.25 1.25 0 116.75 6 1.25 1.25 0 018 4.75zM19 18a1 1 0 01-1 1H6a1 1 0 01-1-1V9h14zm-5.9-3a1 1 0 00-1-1H12a3.12 3.12 0 00-1 .2l-1-.2v-3h3.9v1H11v1.15a3.7 3.7 0 011.05-.15 1.89 1.89 0 012 1.78V15a1.92 1.92 0 01-1.84 2H12a1.88 1.88 0 01-2-1.75 1 1 0 010-.25h1a.89.89 0 001 1h.1a.94.94 0 001-.88z"></path>
-                        </svg>
-                        <span>Event</span>
-                    </button>
-
-                    <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
-                             fill="currentColor" className="mercado-match" width="24" height="24" focusable="false">
-                            <path
-                                d="M21 3v2H3V3zm-6 6h6V7h-6zm0 4h6v-2h-6zm0 4h6v-2h-6zM3 21h18v-2H3zM13 7H3v10h10z"></path>
-                        </svg>
-                        <span>Article</span>
-                    </button>
-                </div>
-            </ShareBox>
-
-            <div>
-                <Article>
-                    <SharedActor>
-                        <a>
-                            <img src="images/user.svg" alt=""/>
-                            <div>
-                                <span>Title</span>
-                                <span>Info</span>
-                                <span>Date</span>
-                            </div>
-                        </a>
-                        <button>
-                            <img src="images/ellipsis.svg" alt=""/>
+            <Container>
+                <ShareBox>
+                    {}
+                    <div>
+                        {props.user.photoURL ? (
+                            <img src={props.user.photoURL} alt=""/>
+                        ) : (
+                            <img src={userPhoto} alt=""/>
+                        )}
+                        <button onClick={handleClick}
+                                disabled={props.loading}>Start a post
                         </button>
-                    </SharedActor>
-                    <Description>Description</Description>
-                    <SharedImg>
-                        <a>
-                            <img src="images/konyaalti.jpg" alt=""/>
-                        </a>
-                    </SharedImg>
-                    
-                    <SocialCounts>
-                        <li>
-                            <button>
-                                <img src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb" alt=""/>
+                    </div>
 
-                                <img src="https://static-exp1.licdn.com/sc/h/5thsbmikm6a8uov24ygwd914f" alt=""/>
-
-                                <span>75</span>
-                            </button>
-                        </li>
-                        <li>
-                            <a>2 comments</a>
-                        </li>
-                    </SocialCounts>
-                    <SocialActions>
+                    <div>
                         <button>
-                            <img src="images/like-icon.svg" alt=""/>
-                            <span>Like</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
+                                 fill="currentColor" className="mercado-match" width="24" height="24"
+                                 focusable="false">
+                                <path
+                                    d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1zm-2-7a2 2 0 11-2-2 2 2 0 012 2z"/>
+                            </svg>
+                            <span>Photo</span>
                         </button>
 
                         <button>
-                            <img src="images/comment-icon.svg" alt=""/>
-                            <span>Comment</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
+                                 fill="currentColor" className="mercado-match" width="24" height="24"
+                                 focusable="false">
+                                <path
+                                    d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-9 12V8l6 4z"/>
+                            </svg>
+                            <span>Video</span>
                         </button>
 
                         <button>
-                            <img src="images/share-icon.svg" alt=""/>
-                            <span>Share</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
+                                 fill="currentColor" className="mercado-match" width="24" height="24"
+                                 focusable="false">
+                                <path
+                                    d="M3 3v15a3 3 0 003 3h12a3 3 0 003-3V3zm13 1.75A1.25 1.25 0 1114.75 6 1.25 1.25 0 0116 4.75zm-8 0A1.25 1.25 0 116.75 6 1.25 1.25 0 018 4.75zM19 18a1 1 0 01-1 1H6a1 1 0 01-1-1V9h14zm-5.9-3a1 1 0 00-1-1H12a3.12 3.12 0 00-1 .2l-1-.2v-3h3.9v1H11v1.15a3.7 3.7 0 011.05-.15 1.89 1.89 0 012 1.78V15a1.92 1.92 0 01-1.84 2H12a1.88 1.88 0 01-2-1.75 1 1 0 010-.25h1a.89.89 0 001 1h.1a.94.94 0 001-.88z"/>
+                            </svg>
+                            <span>Event</span>
                         </button>
 
                         <button>
-                            <img src="images/send-icon.svg" alt=""/>
-                            <span>Send</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24"
+                                 fill="currentColor" className="mercado-match" width="24" height="24"
+                                 focusable="false">
+                                <path
+                                    d="M21 3v2H3V3zm-6 6h6V7h-6zm0 4h6v-2h-6zm0 4h6v-2h-6zM3 21h18v-2H3zM13 7H3v10h10z"/>
+                            </svg>
+                            <span>Article</span>
                         </button>
-                    </SocialActions>
-                </Article>
-            </div>
-            <PostModal showModal={showModal} handleClick={handleClick}/>
-        </Container>
+                    </div>
+                </ShareBox>
+
+                <PostModal showModal={showModal} handleClick={handleClick}/>
+
+                {
+                    props.posts.length === 0 ? (
+                        <p>There are no posts</p>
+                    ) : (
+                        <Content>
+                            { props.loading && <img src={spinLoader}/> }
+
+                            { props.posts.length > 0 &&
+                            props.posts.map((post, key) => (
+
+                                <Article key={key}>
+                                    <SharedActor>
+                                        <a>
+                                            <img src={post.actor.image} alt=""/>
+                                            <div>
+                                                <span>{post.actor.title}</span>
+                                                <span>{post.actor.description}</span>
+                                                <span>{post.actor.date.toDate().toLocaleDateString() } {post.actor.date.toDate().toLocaleTimeString()}</span>
+                                            </div>
+                                        </a>
+
+                                    </SharedActor>
+                                    <Description>{post.description}</Description>
+                                    <SharedImg>
+                                        <a>
+                                            {
+                                                post.sharedImg && (
+                                                    <img src={post.sharedImg} alt=""/>
+                                                )
+                                            }
+
+                                            {
+                                                post.video && (
+                                                    <ReactPlayer width={'100%'} url={post.video} />
+                                                )
+                                            }
+
+
+                                        </a>
+                                    </SharedImg>
+
+                                    <SocialCounts>
+                                        <li>
+                                            <button>
+                                                <img src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"
+                                                     alt=""/>
+
+                                                <img src="https://static-exp1.licdn.com/sc/h/5thsbmikm6a8uov24ygwd914f"
+                                                     alt=""/>
+
+                                                <span>75</span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <a>{post.comments}</a>
+                                        </li>
+                                    </SocialCounts>
+                                    <SocialActions>
+                                        <button>
+                                            <img src={likeIcon} alt=""/>
+                                            <span>Like</span>
+                                        </button>
+
+                                        <button>
+                                            <img src={commentIcon} alt=""/>
+                                            <span>Comment</span>
+                                        </button>
+
+                                        <button>
+                                            <img src={shareIcon} alt=""/>
+                                            <span>Share</span>
+                                        </button>
+
+                                        <button>
+                                            <img src={sendIcon} alt=""/>
+                                            <span>Send</span>
+                                        </button>
+                                    </SocialActions>
+                                </Article>
+                            ))}
+                        </Content>
+                    )}
+
+            </Container>
+
+        </>
     )
 };
 
@@ -298,7 +357,7 @@ const SharedActor = styled.div`
    button {
     position: absolute;
     right: 12px;
-    top: -10px;
+    top: 0;
     background: transparent;
     border: none;
     outline: none;
@@ -340,7 +399,7 @@ const SocialCounts = styled.ul`
     font-size: 12px;
       button {
         display: flex;
-        background-color: transparent;
+        background-color: white;
         border: none;
         
       }
@@ -362,7 +421,7 @@ const SocialActions = styled.div`
     align-items: center;
     padding: 8px;
     color: #0a66c2;
-    background-color: transparent;
+    background-color: white;
     border: none;
     
     @media (min-width: 768px) {
@@ -373,4 +432,25 @@ const SocialActions = styled.div`
   }
 `;
 
-export default Main;
+
+const Content = styled.div`
+  text-align: center;
+  
+  & > img {
+    width: 30px;
+  }
+`;
+
+const mapStateToProps = (state) => {
+    return {
+        loading: state.postState.loading,
+        user: state.userState.user,
+        posts: state.postState.posts
+    }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    getPosts: () => dispatch(getPostsAPI()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

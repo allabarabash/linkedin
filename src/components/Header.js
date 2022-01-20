@@ -2,6 +2,15 @@ import styled from 'styled-components';
 import React from "react";
 import {connect} from "react-redux";
 import { signOutAPI } from '../actions';
+import homeLogo from "../assets/images/home-logo.svg";
+import searchIcon from "../assets/images/search-icon.svg";
+import navHome from "../assets/images/nav-home.svg";
+import navNetwork from "../assets/images/nav-network.svg";
+import navWork from "../assets/images/nav-work.svg";
+import navMessaging from "../assets/images/nav-messaging.svg";
+import navNotifications from "../assets/images/nav-notifications.svg";
+import downIcon from "../assets/images/down-icon.svg";
+import userPhoto from "../assets/images/user.svg";
 
 const Header = (props) => {
     return (
@@ -9,7 +18,7 @@ const Header = (props) => {
             <Content>
                 <Logo>
                     <a href="/home">
-                        <img src="images/home-logo.svg" alt=""/>
+                        <img src={homeLogo} alt=""/>
                     </a>
                 </Logo>
 
@@ -19,7 +28,7 @@ const Header = (props) => {
                     </div>
 
                     <SearchIcon>
-                        <img src="images/search-icon.svg" alt=""/>
+                        <img src={searchIcon} alt=""/>
                     </SearchIcon>
                 </Search>
 
@@ -27,35 +36,35 @@ const Header = (props) => {
                     <NavListWrap>
                         <NavListItem className="active">
                             <a>
-                                <img src="images/nav-home.svg" alt=""/>
+                                <img src={navHome} alt=""/>
                                 <span>Home</span>
                             </a>
                         </NavListItem>
 
                         <NavListItem>
                             <a>
-                                <img src="images/nav-network.svg" alt=""/>
+                                <img src={navNetwork} alt=""/>
                                 <span>Network</span>
                             </a>
                         </NavListItem>
 
                         <NavListItem>
                             <a>
-                                <img src="images/nav-work.svg" alt=""/>
+                                <img src={navWork} alt=""/>
                                 <span>Jobs</span>
                             </a>
                         </NavListItem>
 
                         <NavListItem>
                             <a>
-                                <img src="images/nav-messaging.svg" alt=""/>
+                                <img src={navMessaging} alt=""/>
                                 <span>Messages</span>
                             </a>
                         </NavListItem>
 
                         <NavListItem>
                             <a>
-                                <img src="images/nav-notifications.svg" alt=""/>
+                                <img src={navNotifications} alt=""/>
                                 <span>Notifications</span>
                             </a>
                         </NavListItem>
@@ -65,11 +74,11 @@ const Header = (props) => {
                                 {props.user && props.user.photoURL ?  (
                                     <img src={props.user.photoURL} alt=""/>
                                     ) : (
-                                    <img src="images/user.svg" alt=""/>
+                                    <img src={userPhoto} alt=""/>
                                 )}
                                 <span>
                                     Me
-                                    <img src="images/down-icon.svg" alt=""/>
+                                    <img src={downIcon} alt=""/>
                                 </span>
                             </a>
 
@@ -80,9 +89,9 @@ const Header = (props) => {
                         
                         <Work>
                             <a>
-                                <img src="images/nav-work.svg" alt=""/>
+                                <img src={navWork} alt=""/>
                                 <span>Work</span>
-                                <img src="images/down-icon.svg" alt=""/>
+                                <img src={downIcon} alt=""/>
                             </a>
                         </Work>
                     </NavListWrap>
@@ -176,7 +185,7 @@ const NavListWrap = styled.ul`
     flex-wrap: nowrap;
     list-style-type: none;
     
-    .active
+    .active {
         span:after {
             content: '';
             transform: scaleX(1);
@@ -190,8 +199,6 @@ const NavListWrap = styled.ul`
         }
         
     }
-     
-      
 `;
 const NavListItem = styled.li`
     display: flex;

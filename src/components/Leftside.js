@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 import {connect} from "react-redux";
+import userPhoto from "../assets/images/user.svg";
+import cardBg from "../assets/images/card-bg.svg";
+import photo from "../assets/images/photo.svg";
+import widgetIcon from "../assets/images/widget-icon.svg";
+import itemIcon from "../assets/images/item-icon.svg";
+import plusIcon from "../assets/images/plus-icon.svg";
+import React from "react";
 
 const Leftside = (props) => {
     return <Container>
@@ -26,12 +33,12 @@ const Leftside = (props) => {
                             Grow your network
                         </span>
                     </div>
-                    <img src="images/widget-icon.svg" alt=""/>
+                    <img src={widgetIcon} alt=""/>
                 </a>
             </Widget>
             <Item>
                 <span>
-                    <img src="images/item-icon.svg" alt=""/>
+                    <img src={itemIcon} alt=""/>
                     My Items
                 </span>
 
@@ -44,7 +51,7 @@ const Leftside = (props) => {
             </a>
             <a>
                 <span>Events
-                    <img src="images/plus-icon.svg" alt=""/>
+                    <img src={plusIcon} alt=""/>
                 </span>
 
             </a>
@@ -85,8 +92,7 @@ const UserInfo = styled.div`
 `;
 
 const CardBackground = styled.div`
-    background: url('images/card-bg.svg');
-    background-position: center;
+    background: url(${cardBg}) center;
     background-size: 462px;
     height: 54px;
     margin: -12px -12px 0;
@@ -94,7 +100,7 @@ const CardBackground = styled.div`
 
 const Photo = styled.div`
     box-shadow: none;
-    background-image: url('images/photo.svg');
+    background-image: url(${photo});
     width: 72px;
     height: 72px;
     box-sizing: border-box;
@@ -151,11 +157,11 @@ const Widget = styled.div`
             font-size: 12px;
             line-height: 1.333;
             
-            &: first-child {
+            &:first-child {
                 color: rgba(0, 0, 0, 0.6);
             }
             
-            &: nth-child {
+            &:nth-child {
                 color: rgba(0, 0, 0, 1);
             }
         }
